@@ -2,42 +2,44 @@ from google import genai
 import os
 
 api_key = os.getenv("GEMINI_API_KEY")
-
 client = genai.Client(api_key=api_key)
 
-history = []
 
-system_instruction = """
-You are a friendly AI assistant.
-Answer naturally and help the user.
-"""
+def start_chat():
 
-while True:
+    history = []
 
-    user_message = input("You: ")
+    system_instruction = """
+    You are a friendly AI assistant.
+    Answer naturally and help the user.
+    """
 
-    if user_message.lower() == "exit":
-        print("Chat ended. Goodbye!")
-        break
+    while True:
 
-    history.append({
-        "role": "user",
-        "parts": [{"text": user_message}]
-    })
+        user_message = input("You: ")
 
-    response = client.models.generate_content(
-        model="gemini-3.5-flash",
-        contents=history,
-        config={
-            "system_instruction": system_instruction
-        }
-    )
+        if user_message.lower() == "exit":
+            print("Chat ended. Goodbye!")
+            break
 
-    bot_reply = response.text
+        history.append({
+            "role": "user",
+            "parts": [{"text": user_message}]
+        })
 
-    print("Gemini:", bot_reply)
+        response = client.models.generate_content(
+            model="gemini-3.5-flash",
+            contents=history,
+            config={
+                "system_instruction": system_instruction
+            }
+        )
 
-    history.append({
-        "role": "model",
-        "parts": [{"text": bot_reply}]
-    })
+        bot_reply = response.text
+
+        print("Gemini:", bot_reply)
+
+        history.append({
+            "role": "model",
+            "parts": [{"text": bot_reply}]
+        })
