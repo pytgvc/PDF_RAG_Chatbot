@@ -3,6 +3,9 @@
 # PDF RAG Chatbot
 
 A chatbot that answers questions using only the content of a PDF file.
+A quiz generator
+for coversation
+
 
 ## How it works
 
